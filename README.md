@@ -7,4 +7,5 @@ Load load.py and run functions load() and props() with the URL, Data_ID, and pla
 !["Example of where to find Data ID"](https://i.imgur.com/h069j58.png)
 
 A csv file will be loaded for you to import into an Excel spreadsheet with Power Query. Update the props() function to append new rows, and refresh the Power Query to update the spreadsheet.
+
 !["Example of spreadsheet"](https://i.imgur.com/pzxBAXr.png)
