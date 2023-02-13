@@ -15,8 +15,10 @@ curry_anal <- data.frame(NAME = "Stephen Curry",
                          PTS = c(pts_avg),
                          REB = c(reb_avg),
                          AST = c(ast_avg),
-                         FGP = (fgp_avg),
-                         TPP = (tpp_avg))
+                         FGP = c(fgp_avg),
+                         TPP = c(tpp_avg))
 print(curry_anal)
 setwd("~/Desktop/")
 write.csv(curry_anal, "~/Desktop/sinix-model/curry_anal.csv", row.names = FALSE)
+
+
