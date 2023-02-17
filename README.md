@@ -1,5 +1,5 @@
 # SINIX
-A statistical model and data scraper for retrieving statistics on various NBA players. Currently written in Python and R.
+A statistical model and scraper for retrieving data from the NBA. Written in Python and R.
 ## Installation
 Reference **sinix_guide.ipynb** for installation guide.
 ## End-Goal
