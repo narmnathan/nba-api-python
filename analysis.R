@@ -1,4 +1,3 @@
-# roadmap: create function to load csv, find averages / variables to track
 anaylsis <- function(player_csv, name) {
     setwd("~/Desktop/sinix-model")
     player <- read.csv(player_csv)
