@@ -11,6 +11,6 @@ def load(player):
              'TOV'])
 
 # load('curry')
-props('https://www.basketball-reference.com/players/c/curryst01/gamelog/2023', 'pgl_basic.860', 'curry')
+# props('https://www.basketball-reference.com/players/c/curryst01/gamelog/2023', 'pgl_basic.860', 'curry')
 
 
