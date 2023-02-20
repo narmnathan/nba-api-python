@@ -1,23 +1,65 @@
 setwd("~/Desktop/sinix-model/")
 library(dplyr)
-player_name = readline(prompt="Enter player name: ") # stores player name
-filename <- paste(player_name, ".csv", sep="") # retrieves csv from working directory
-gamelog <- read.csv(filename) # stores gamelog into R
+player_name <- NULL;
+filename <- NULL;
+gamelog <- NULL;
 
-# FILTER
+# SETUP
+new_player <- function() {
+  name <- readline(prompt="Enter player name: ")
+  player_name <<- name
+  filename <<- paste(name, ".csv", sep="")
+  if (file.exists(filename) == FALSE) {
+    print("File not found! Reload")
+  } else {
+    gamelog <<- read.csv(filename)
+    return("Successfully loaded")
+  }
+}
+# FILTERS
 
-# last games
-filter_last <- function(number) {
-  reset()
-  gamelog <<- gamelog[1:number, ]
+# filter by home or away
+filter_court <- function() {
+  court <- readline(prompt="Enter filter [HOME/AWAY]: ")
+  if (court == "HOME") {
+    gamelog <<- filter(gamelog, grepl('vs.', MATCHUP))
+  } else if (court == "AWAY") {
+    gamelog <<- filter(gamelog, grepl('@', MATCHUP))
+  }
+  return(gamelog)
 }
 
-# resets gamelog to full size
+filter_opponent <- function() {
+  opponent <- readline(prompt="What opponent to filter? e.g. DAL, NYK, TOR: ")
+  gamelog <<- filter(gamelog, grepl(opponent, MATCHUP))
+  return(gamelog)
+}
+
+# last games
+filter_last <- function() {
+  number <- readline(prompt="How many past games to filter? e.g. 5 for last 5 games: ")
+  gamelog <<- gamelog[1:number, ]
+  return(gamelog)
+}
+
+filter_min <- function() {
+  minmax <- readline(prompt="Filtering max/min minutes played? [MAX/MIN]: ")
+  if (minmax == "MIN") {
+    minimum <- readline(prompt="Minimum # of minutes played? ")
+    gamelog <<- filter(gamelog, MIN > minimum)
+  } else if (minmax == "MAX") {
+    maximum <- readline(prompt="Maximum # of minutes played? ")
+    gamelog <<- filter(gamelog, MIN < maximum)
+  }
+  return(gamelog)
+}
+
+# resets gamelog without filters
 reset <- function() {
   gamelog <<- read.csv(filename)
 }
 
-# RETRIEVAL
+# RETRIEVALS
 
 #  name of player
 name <- function() {
@@ -76,3 +118,8 @@ avg_fg_type <- function() {
   return(avg_fg_type)
 }
 
+new_player()
+name()
+avg_pra()
+avg_reb_type()
+avg_fg_type()
