@@ -22,7 +22,7 @@ def game_log(player_name):
     else:
         log = playergamelog.PlayerGameLog(player_id=id_find(player_name)).get_data_frames()[0]
         filename = player_name + '.csv'
-        pathname = '~Desktop/sinix-model/' + filename
+        pathname = '~/Desktop/sinix-model/' + filename
         check = os.path.isfile(pathname)
         while not check:
             log.to_csv(filename, index=False)
