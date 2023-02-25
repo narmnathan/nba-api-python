@@ -1,14 +1,17 @@
-setwd("~/Desktop/sinix-model/")
+setwd("~/sinix-model/")
 library(dplyr)
 player_name <- NULL;
 filename <- NULL;
 gamelog <- NULL;
+player_input <- NULL;
+filter_input <- NULL;
+###############################################################################
 
 # SETUP
-new_player <- function() {
-  name <- readline(prompt="Enter player name: ")
-  player_name <<- name
-  filename <<- paste(name, ".csv", sep="")
+new_player <- function(player_input) {
+  # name <- readline(prompt="Enter player name: ")
+  player_name <<- player_input
+  filename <<- paste(player_name, ".csv", sep="")
   if (file.exists(filename) == FALSE) {
     print("File not found! Reload")
   } else {
@@ -57,16 +60,23 @@ filter_min <- function() {
 # resets gamelog without filters
 reset <- function() {
   gamelog <<- read.csv(filename)
+  print("Gamelog reset.")
+  menu()
 }
 
 # RETRIEVALS
+
+# gamelog
+view_gamelog <- function() {
+  print(gamelog)
+}
 
 #  name of player
 name <- function() {
   name <- data.frame (
     NAME = c(player_name)
   )
-  return(name)
+  print(name)
 }
 
 # averages of points, rebounds, assists
@@ -79,7 +89,7 @@ avg_pra <- function() {
     REB = c(reb),
     AST = c(ast)
   )
-  return(avg_pra)
+  print(avg_pra)
 }
 
 # all rebound averages and ratio of offensive/defensive rebounds to total rebounds
@@ -94,7 +104,7 @@ avg_reb_type <- function() {
     OREB_PCT = c(oreb_pct),
     DREB_PCT = c(dreb_pct)
   )
-  return(avg_reb_type)
+  print(avg_reb_type)
 }
 
 # all field goal averages made and ratio of threes made to field goals made 
@@ -115,11 +125,78 @@ avg_fg_type <- function() {
     FG3_PCT = c(fg3_pct),
     FG3_RATIO = c(fg3_ratio)
   )
-  return(avg_fg_type)
+  print(avg_fg_type)
+}
+# RUN
+run <- function() {
+  welcome <- readline(prompt="Analyze new player? [Y/N]: ")
+  if (welcome == "Y") {
+    player_input <<- readline("Enter full name of player, e.g. Anthony Edwards, LeBron James, Anthony Davis: ")
+    new_player(player_input)
+    menu()
+  } else {
+    print("Key not recognized.")
+    run()
+  }
 }
 
-new_player()
-name()
-avg_pra()
-avg_reb_type()
-avg_fg_type()
+menu <- function() {
+  input <- readline(prompt="Enter:
+  [G] -- view gamelog
+  [F] -- filters
+  [A] -- analysis
+  ")
+  if (input == "G") {
+    view_gamelog()
+    menu()
+  } else if (input == "F") {
+    filter_menu()
+  } else if (input == "A") {
+    analysis()
+    menu()
+  } else {
+    print("Key not recognized.")
+    menu()
+  }
+}
+
+analysis <- function() {
+  avg_pra()
+  avg_fg_type()
+  avg_reb_type()
+}
+
+filter_menu <- function() {
+  input <- readline(prompt="Enter:
+  FILTERS:
+  [C] -- filter by court
+  [L] -- filter by last n games
+  [O] -- filter by opponent
+  [M] -- filter by minutes played
+  [R] -- reset all filters
+  ")
+  if (input == "C") {
+    filter_court()
+    menu()
+  } else if (input == "L") {
+    filter_last()
+    menu()
+  } else if (input == "O") {
+    filter_opponent()
+    menu()
+  } else if (input == "M") {
+    filter_min()
+    menu()
+  } else if (input == "R") {
+    reset()
+    menu()
+  } else {
+    print("Key not recognized.")
+    menu()
+  }
+}
+
+###############################################################################
+run()
+
+
