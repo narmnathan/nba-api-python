@@ -77,7 +77,6 @@ name <- function() {
     NAME = c(player_name)
   )
   print(name)
-  return(name)
 }
 
 # averages of points, rebounds, assists
@@ -91,7 +90,6 @@ avg_pra <- function() {
     AST = c(ast)
   )
   print(avg_pra)
-  return(avg_pra)
 }
 
 # all rebound averages and ratio of offensive/defensive rebounds to total rebounds
@@ -107,7 +105,6 @@ avg_reb_type <- function() {
     DREB_PCT = c(dreb_pct)
   )
   print(avg_reb_type)
-  return(avg_reb_type)
 }
 
 # all field goal averages made and ratio of threes made to field goals made 
@@ -129,7 +126,6 @@ avg_fg_type <- function() {
     FG3_RATIO = c(fg3_ratio)
   )
   print(avg_fg_type)
-  return(avg_fg_type)
 }
 # RUN
 run <- function() {
@@ -156,11 +152,18 @@ menu <- function() {
   } else if (input == "F") {
     filter_menu()
   } else if (input == "A") {
-    analysis_menu()
+    analysis()
+    menu()
   } else {
     print("Key not recognized.")
     menu()
   }
+}
+
+analysis <- function() {
+  avg_pra()
+  avg_fg_type()
+  avg_reb_type()
 }
 
 filter_menu <- function() {
@@ -186,27 +189,6 @@ filter_menu <- function() {
     menu()
   } else if (input == "R") {
     reset()
-    menu()
-  } else {
-    print("Key not recognized.")
-    menu()
-  }
-}
-analysis_menu <- function() {
-  input <- readline(prompt="Enter:
-  AVERAGES:
-  [P] -- pts/reb/ast
-  [F] -- field goal types and percentages
-  [R] -- rebound types and percentages
-  ")
-  if (input == "P") {
-    avg_pra()
-    menu()
-  } else if (input == "F") {
-    avg_fg_type()
-    menu()
-  } else if (input == "R") {
-    avg_reb_type()
     menu()
   } else {
     print("Key not recognized.")
