@@ -7,7 +7,7 @@ import api, testing
 player_input = input("Enter player names to retrieve with full names separated by commas. \ne.g.: Anthony Edwards, LeBron James, Joel Embiid\n")
 player_names = player_input.split(", ")
 for name in player_names:
-    api.player_game_log(name)
+    testing.player_game_log(name)
 
 team_input = input("Enter team abbreviations to retrieve separated by commas. \ne.g.: BKN, ATL, TOR\n")
 team_abbrs = team_input.split(", ")
