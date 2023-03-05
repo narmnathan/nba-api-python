@@ -1,5 +1,5 @@
 import pandas as data
-import os, new_load
+import os, load
 
 load = new_load.Load()
 

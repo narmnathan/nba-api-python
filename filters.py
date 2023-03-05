@@ -1,5 +1,5 @@
 import pandas as data
-import vars, new_load
+import vars, load
 
 class Filters:
     load = new_load.Load()

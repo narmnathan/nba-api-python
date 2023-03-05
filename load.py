@@ -7,7 +7,6 @@ class CSV:
 
 CSV()
 
-
 def player_load(player):
     try:
         api.player_game_log(player)
