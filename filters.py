@@ -4,7 +4,7 @@ import os, load
 class Variables:
     gamelog = load.CSV.gamelogs['player']
     team_gamelog = load.CSV.gamelogs['team']
-    # player stats
+    # player stats.py
     min = gamelog['MIN'].mean()
     pts = gamelog['PTS'].mean()
     reb = gamelog['REB'].mean()
@@ -27,7 +27,7 @@ class Variables:
     ftm = gamelog['FTM'].mean()
     fta = gamelog['FTA'].mean()
     ft_pct = gamelog['FT_PCT'].mean()
-    # team stats
+    # team stats.py
     tm_min = team_gamelog['MIN'].mean()
     tm_pts = team_gamelog['PTS'].mean()
     tm_reb = team_gamelog['REB'].mean()
@@ -80,5 +80,3 @@ def without(player):
     dates = np.array(alt_gamelog['GAME_DATE'])
     logs.gamelog = logs.gamelog[~logs.gamelog['GAME_DATE'].isin(dates)]
 
-without('Jaylen Brown')
-print(logs.gamelog['GAME_DATE'])
