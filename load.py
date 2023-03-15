@@ -57,5 +57,6 @@ def load(player, team, court, opp, prop_num, prop_type):
     print(player + ', ' + team + ' ' + court + ' ' + opp + ', ' + prop_num + ' ' + prop_type + ': gamelogs loaded')
 
 
-# load('Jayson Tatum', 'BOS', '@', 'CLE', '8.5', 'reb') -- example of load function
+# load('Jayson Tatum', 'BOS', '@', 'CLE', '8.5', 'reb')
+
 
