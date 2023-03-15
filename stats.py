@@ -56,3 +56,17 @@ def tm_advanced():
     table = data.DataFrame(frame, index=index)
     print(table)
 
+def opp_advanced():
+    tm_poss = 0.5 * ((stats.tm_fga + 0.4*stats.tm_fta - 1.07*(stats.tm_oreb/(stats.tm_oreb + stats.opp_dreb))*(stats.tm_fga-stats.tm_fgm)+stats.tm_tov) + (stats.opp_fga + 0.4*(stats.opp_fta) - 1.07*(stats.opp_oreb/(stats.opp_oreb + stats.tm_dreb)*(stats.opp_fga-stats.opp_fgm) + stats.opp_tov)))
+    opp_poss = 0.5 * ((stats.opp_fga + 0.4*stats.opp_fta - 1.07*(stats.opp_oreb/(stats.opp_oreb + stats.tm_dreb))*(stats.opp_fga-stats.opp_fgm)+stats.opp_tov) + (stats.tm_fga + 0.4*(stats.tm_fta) - 1.07*(stats.tm_oreb/(stats.tm_oreb + stats.opp_dreb)*(stats.tm_fga-stats.tm_fgm) + stats.tm_tov)))
+    oreb_pct = (100 * (stats.oreb * (stats.tm_min / 5))) / (stats.min * (stats.tm_oreb + stats.opp_dreb))
+    dreb_pct = (100 * (stats.dreb * (stats.tm_min / 5))) / (stats.min * (stats.tm_dreb + stats.opp_oreb))
+    blk_pct = (100 * ((stats.blk) * (stats.tm_min / 5))) / (stats.tm_min * (stats.opp_fga - stats.opp_fg3a))
+    stl_pct = (100 * (stats.stl * (stats.tm_min / 5))) / (stats.min * opp_poss)
+    frame = {
+        Gamelogs.prop['player'] + ": " + Gamelogs.prop['team'] + " " + Gamelogs.prop['court'] + " " + Gamelogs.prop['opp']: [oreb_pct, dreb_pct, blk_pct, stl_pct]}
+    index = ['OREB%', 'DREB%', 'BLK%', 'STL%']
+    table = data.DataFrame(frame, index=index)
+    print(table)
+
+# set up return values for functions to load into report module
