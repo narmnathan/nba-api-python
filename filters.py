@@ -4,7 +4,8 @@ import os, load
 class Variables:
     gamelog = load.CSV.gamelogs['player']
     team_gamelog = load.CSV.gamelogs['team']
-    # player stats.py
+    opp_gamelog = load.CSV.gamelogs['opp']
+    # player stats
     min = gamelog['MIN'].mean()
     pts = gamelog['PTS'].mean()
     reb = gamelog['REB'].mean()
@@ -27,7 +28,7 @@ class Variables:
     ftm = gamelog['FTM'].mean()
     fta = gamelog['FTA'].mean()
     ft_pct = gamelog['FT_PCT'].mean()
-    # team stats.py
+    # team stats
     tm_min = team_gamelog['MIN'].mean()
     tm_pts = team_gamelog['PTS'].mean()
     tm_reb = team_gamelog['REB'].mean()
@@ -50,6 +51,29 @@ class Variables:
     tm_ftm = team_gamelog['FTM'].mean()
     tm_fta = team_gamelog['FTA'].mean()
     tm_ft_pct = team_gamelog['FT_PCT'].mean()
+    # opponent stats
+    opp_min = opp_gamelog['MIN'].mean()
+    opp_pts = opp_gamelog['PTS'].mean()
+    opp_reb = opp_gamelog['REB'].mean()
+    opp_oreb = opp_gamelog['OREB'].mean()
+    opp_dreb = opp_gamelog['DREB'].mean()
+    opp_oreb_ratio = opp_oreb / opp_reb
+    opp_dreb_ratio = opp_dreb / opp_reb
+    opp_ast = opp_gamelog['AST'].mean()
+    opp_stl = opp_gamelog['STL'].mean()
+    opp_blk = opp_gamelog['BLK'].mean()
+    opp_tov = opp_gamelog['TOV'].mean()
+    opp_pf = opp_gamelog['PF'].mean()
+    opp_fgm = opp_gamelog['FGM'].mean()
+    opp_fga = opp_gamelog['FGA'].mean()
+    opp_fg3m = opp_gamelog['FG3M'].mean()
+    opp_fg3a = opp_gamelog['FG3A'].mean()
+    opp_fg_pct = opp_gamelog['FG_PCT'].mean()
+    opp_fg3_pct = opp_gamelog['FG3_PCT'].mean()
+    opp_fg3_ratio = opp_fg3m / opp_fgm
+    opp_ftm = opp_gamelog['FTM'].mean()
+    opp_fta = opp_gamelog['FTA'].mean()
+    opp_ft_pct = opp_gamelog['FT_PCT'].mean()
 
 logs = Variables()
 
