@@ -37,7 +37,6 @@ def player_game_log(player_name):
             # print("CSV load successful for " + player_name)
             return player_log
 
-
 def team_game_log(team_abbr):
     try:
         teams.find_team_by_abbreviation(team_abbr)['id']

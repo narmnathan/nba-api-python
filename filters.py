@@ -1,6 +1,6 @@
 import numpy as np
-from load import CSV, alt_load
-
+from load import alt_load
+from logs import CSV
 
 class Variables:
     gamelog = CSV.gamelogs['player']
@@ -75,33 +75,39 @@ class Variables:
     opp_ftm = opp_gamelog['FTM'].mean()
     opp_fta = opp_gamelog['FTA'].mean()
     opp_ft_pct = opp_gamelog['FT_PCT'].mean()
-Variables()
 
+
+Variables()
 
 def homecourt(type):
     if type == 'HOME':
-        Variables.gamelog = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('vs.')]
+        Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('vs.')]
+        print(Variables.gamelog)
     elif type == 'AWAY':
-        Variables.gamelog = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('@')]
+        Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('@')]
+        print(Variables.gamelog)
 
 
 def opponent(opp):
-    Variables.gamelog = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains(opp)]
+    Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains(opp)]
 
 
 def last(games):
-    Variables.gamelog = Variables.gamelog.loc[0:games]
+    Variables.gamelog['player'] = Variables.gamelog.loc[0:games]
+    Variables.gamelog['opponent'] = Variables.opp_gamelog.loc[0:games]
+    Variables.gamelog['team'] = Variables.team_gamelog.loc[0:games]
 
 
-def min(avg, type):
+def minutes(num, type):
     if type == 'MIN':
-        Variables.gamelog = Variables.gamelog[(Variables.gamelog['MIN'] > avg)]
+        Variables.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] > num)]
     elif type == 'MAX':
-        Variables.gamelog = Variables.gamelog[(Variables.gamelog['MIN'] < avg)]
+        Variables.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] < num)]
 
 
 def without(player):
     alt_load(player)
     alt_gamelog = CSV.gamelogs['alt']
     dates = np.array(alt_gamelog['GAME_DATE'])
-    Variables.gamelog = Variables.gamelog[~Variables.gamelog['GAME_DATE'].isin(dates)]
+    Variables.gamelog['player'] = Variables.gamelog[~Variables.gamelog['GAME_DATE'].isin(dates)]
+
