@@ -1,13 +1,14 @@
 import pandas as data
-from filters import Variables as stats
+from filters import filters, Variables as stats
 from load import CSV
 
 
 class Gamelogs:
+    filters()
     prop = CSV.prop
-    player = stats.gamelog
-    team = stats.team_gamelog
-    opp = stats.opp_gamelog
+    player = filters.gamelogs['player']
+    team = filters.gamelogs['team']
+    opp = filters.gamelogs['opp']
 
 
 Gamelogs()

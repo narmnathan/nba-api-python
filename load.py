@@ -2,13 +2,9 @@ import api
 import os
 import pandas as data
 import time
-
+from variables import CSV
 
 # dictionaries all other modules refer to
-class CSV:
-    gamelogs = {}
-    prop = {}
-
 
 CSV()
 
@@ -65,7 +61,18 @@ def load(player, team, court, opp, prop_num, prop_type):
     time.sleep(.600)
     CSV.prop['num'] = prop_num
     CSV.prop['type'] = prop_type
+    CSV.vars = player + team + court + opp + prop_num + prop_type
 
 
-
-load('Jayson Tatum', 'BOS', '@', 'CLE', '8.5', 'reb')
+def run(user_input):
+    # define variables from user input
+    dict = user_input.split(" ")
+    player = str(dict[0]) + " " + str(dict[1])
+    team = dict[2]
+    court = dict[3]
+    opp = dict[4]
+    prop_num = dict[5]
+    prop_type = dict[6]
+    load(player, team, court, opp, prop_num, prop_type)
+    CSV.vars = dict
+    print("Gamelogs successfully loaded")
