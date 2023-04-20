@@ -1,12 +1,15 @@
 import os
+from maintest import run
+from datetime import date
 from load import load
-from stats import basic, reb_type, fg_type, tm_advanced, opp_advanced
 from filters import homecourt, opponent, last, min, without
+from stats import basic, reb_type, fg_type, tm_advanced, opp_advanced
+
 
 # to-do: properly connect load -> filters -> stats! markdown reports showing stats for anthony davis...
 
 # take load function and print header to document
-def run():
+def report():
     # define variables from user input
     user_input = input(
         "Enter player name, team, court, opponent, prop number, and prop type. \ne.g. Jayson Tatum BOS @ CLE 8.5 REB\n")
@@ -17,9 +20,13 @@ def run():
     opp = dict[4]
     prop_num = dict[5]
     prop_type = dict[6]
+    load(player, team, court, opp, prop_num, prop_type)
+    print("Gamelogs successfully loaded")
 
     # open markdown file
-    title = player + ' ' + prop_num + ' ' + prop_type
+    today = date.today()
+    title = player + ' ' + prop_num + ' ' + prop_type + today.strftime("%m/%d/%y")
+
     md_path = os.getcwd() + '/reports/md/' + title + '.md'
     report = open(md_path, "w+")
 
@@ -27,16 +34,12 @@ def run():
     def newline():
         report.write("\n")
 
-    # load function
-    load(player, team, court, opp, prop_num, prop_type)
-
     # write header and confirm load
     header1 = player + ', ' + team + ' ' + court + ' ' + opp + ', ' + prop_num + ' ' + prop_type
     report.write("# " + header1)
     newline()
     report.write('---')
     newline()
-    print(header1 + ': gamelogs loaded')
 
     # function to load main stats
     def basic_load():
@@ -118,4 +121,4 @@ def run():
     print("'" + file + "'" + ' successfully created')
 
 
-run()
+report()
