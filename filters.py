@@ -1,12 +1,13 @@
-import numpy as np
 from load import alt_load
-from logs import CSV
+import numpy as np
+from manager import CSV, Filtered
+
 
 class Variables:
-    gamelog = CSV.gamelogs['player']
-    team_gamelog = CSV.gamelogs['team']
-    opp_gamelog = CSV.gamelogs['opp']
-    # player stats
+    gamelog = CSV.gamelog['player']
+    team_gamelog = CSV.gamelog['team']
+    opp_gamelog = CSV.gamelog['opp']
+    # Player stats
     min = gamelog['MIN'].mean()
     pts = gamelog['PTS'].mean()
     reb = gamelog['REB'].mean()
@@ -29,7 +30,7 @@ class Variables:
     ftm = gamelog['FTM'].mean()
     fta = gamelog['FTA'].mean()
     ft_pct = gamelog['FT_PCT'].mean()
-    # team stats
+    # Team stats
     tm_min = team_gamelog['MIN'].mean()
     tm_pts = team_gamelog['PTS'].mean()
     tm_reb = team_gamelog['REB'].mean()
@@ -52,7 +53,7 @@ class Variables:
     tm_ftm = team_gamelog['FTM'].mean()
     tm_fta = team_gamelog['FTA'].mean()
     tm_ft_pct = team_gamelog['FT_PCT'].mean()
-    # opponent stats
+    # Opponent stats
     opp_min = opp_gamelog['MIN'].mean()
     opp_pts = opp_gamelog['PTS'].mean()
     opp_reb = opp_gamelog['REB'].mean()
@@ -78,36 +79,42 @@ class Variables:
 
 
 Variables()
+Filtered()
+
+
+def reset():
+    Filtered.gamelog['player'] = Variables.gamelog
+    Filtered.gamelog['team'] = Variables.team_gamelog
+    Filtered.gamelog['opponent'] = Variables.opp_gamelog
+
 
 def homecourt(type):
     if type == 'HOME':
-        Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('vs.')]
-        print(Variables.gamelog)
+        Filtered.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('vs.')]
     elif type == 'AWAY':
-        Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('@')]
-        print(Variables.gamelog)
+        Filtered.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains('@')]
 
 
 def opponent(opp):
-    Variables.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains(opp)]
+    Filtered.gamelog['player'] = Variables.gamelog[Variables.gamelog['MATCHUP'].str.contains(opp)]
 
 
 def last(games):
-    Variables.gamelog['player'] = Variables.gamelog.loc[0:games]
-    Variables.gamelog['opponent'] = Variables.opp_gamelog.loc[0:games]
-    Variables.gamelog['team'] = Variables.team_gamelog.loc[0:games]
+    Filtered.gamelog['player'] = Variables.gamelog.loc[0:(games - 1)]
+    Filtered.gamelog['opponent'] = Variables.opp_gamelog.loc[0:(games - 1)]
+    Filtered.gamelog['team'] = Variables.team_gamelog.loc[0:(games - 1)]
 
 
 def minutes(num, type):
     if type == 'MIN':
-        Variables.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] > num)]
+        Filtered.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] > num)]
     elif type == 'MAX':
-        Variables.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] < num)]
+        Filtered.gamelog['player'] = Variables.gamelog[(Variables.gamelog['MIN'] < num)]
 
 
 def without(player):
     alt_load(player)
-    alt_gamelog = CSV.gamelogs['alt']
+    alt_gamelog = CSV.gamelog['alt']
     dates = np.array(alt_gamelog['GAME_DATE'])
-    Variables.gamelog['player'] = Variables.gamelog[~Variables.gamelog['GAME_DATE'].isin(dates)]
+    Filtered.gamelog['player'] = Variables.gamelog[~Variables.gamelog['GAME_DATE'].isin(dates)]
 

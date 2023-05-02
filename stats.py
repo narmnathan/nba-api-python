@@ -1,26 +1,25 @@
 import pandas as data
-from filters import filters, Variables as stats
+from classes import Variables as stats
 from load import CSV
 
 
-class Gamelogs:
-    filters()
+class gamelogs:
     prop = CSV.prop
-    player = filters.gamelogs['player']
-    team = filters.gamelogs['team']
-    opp = filters.gamelogs['opp']
+    player = stats.gamelog
+    team = stats.team_gamelog
+    opp = stats.opp_gamelog
 
 
-Gamelogs()
+gamelogs()
 
 
-def gamelog(type):
-    if type == 'PLAYER':
-        print(Gamelogs.player)
-    elif type == 'TEAM':
-        print(Gamelogs.team)
-    elif type == 'OPP':
-        print(Gamelogs.opp)
+def show(log_type):
+    if log_type == 'PLAYER':
+        print(gamelogs.player)
+    elif log_type == 'TEAM':
+        print(gamelogs.team)
+    elif log_type == 'OPP':
+        print(gamelogs.opp)
 
 
 def basic():
@@ -41,8 +40,8 @@ def reb_type():
 
 def fg_type():
     frame = {" ": [stats.fgm, stats.fga, stats.fg_pct,
-                                       stats.fg3m, stats.fg3a, stats.fg3_pct, stats.fg3_ratio,
-                                       stats.ftm, stats.fta, stats.ft_pct]}
+                   stats.fg3m, stats.fg3a, stats.fg3_pct, stats.fg3_ratio,
+                   stats.ftm, stats.fta, stats.ft_pct]}
     index = ['FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FG3_RATIO', 'FTM', 'FTA', 'FT_PCT']
     table = data.DataFrame(frame, index=index)
     md = table.to_markdown()
@@ -59,7 +58,7 @@ def tm_advanced():
     ts_pct = (stats.pts / (2 * tsa))
     usg_pct = (100 * (tsa + stats.tov) * (stats.tm_min / 5)) / (stats.min * (tm_tsa + stats.tm_tov))
     frame = {
-        Gamelogs.prop['player'] + ": " + Gamelogs.prop['team']: [ast_pct, ast_to_ratio, efg_pct, tsa, tov_pct, ts_pct,
+        gamelogs.prop['player'] + ": " + gamelogs.prop['team']: [ast_pct, ast_to_ratio, efg_pct, tsa, tov_pct, ts_pct,
                                                                  usg_pct]}
     index = ['AST%', 'AST/TO', 'eFG%', 'TSA', 'TOV%', 'TS%', 'USG%']
     table = data.DataFrame(frame, index=index)
@@ -82,10 +81,9 @@ def opp_advanced():
     blk_pct = (100 * ((stats.blk) * (stats.tm_min / 5))) / (stats.tm_min * (stats.opp_fga - stats.opp_fg3a))
     stl_pct = (100 * (stats.stl * (stats.tm_min / 5))) / (stats.min * opp_poss)
     frame = {
-        Gamelogs.prop['player'] + ": " + Gamelogs.prop['team'] + " " + Gamelogs.prop['court'] + " " + Gamelogs.prop[
+        gamelogs.prop['player'] + ": " + gamelogs.prop['team'] + " " + gamelogs.prop['court'] + " " + gamelogs.prop[
             'opp']: [oreb_pct, dreb_pct, blk_pct, stl_pct]}
     index = ['OREB%', 'DREB%', 'BLK%', 'STL%']
     table = data.DataFrame(frame, index=index)
     md = table.to_markdown()
     return md
-
