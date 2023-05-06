@@ -1,5 +1,12 @@
 class CSV:
     gamelog = {}
     prop = {}
+
+
 class Filtered:
-    gamelog = {}
+    player = {}
+    team = {}
+    opp = {}
+
+
+
