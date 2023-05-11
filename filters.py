@@ -13,7 +13,7 @@ Logs()
 Filtered()
 
 
-def homecourt(type):
+def court(type):
     if type == 'HOME':
         Filtered.player['court'] = Logs.gamelog[Logs.gamelog['MATCHUP'].str.contains('vs.')]
         # Filtered.team['court'] = Logs.team_gamelog[Logs.team_gamelog['MATCHUP'].str.contrains('vs.')]

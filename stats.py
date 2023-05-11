@@ -89,18 +89,18 @@ Gamelogs()  # no way to simplify this ?
 # per filters: knowing gamelogs change per filter, need a method to change gamelog variables per filter.
 # so last 10 games will change the gamelog assignment to Filtered.player['last'] instead of CSV.gamelog['player']
 
-def change(param):
-    match param:
-        case "COURT":
-            Stats.gamelog = Filtered.player['court']
-        case "OPP":
-            Stats.gamelog = Filtered.player['against']
-        case "LAST":
-            Stats.gamelog = Filtered.player['last']
-        case "MIN":
-            Stats.gamelog = Filtered.player['minutes']
-        case "WITHOUT":
-            Stats.gamelog = Filtered.player['without']
+def change(type): # can run switch statement but ipykernel stuck on python3.9
+    if type == 'COURT':
+        Stats.gamelog = Filtered.player['court']
+    elif type == 'OPP':
+        Stats.gamelog = Filtered.player['against']
+    elif type == 'LAST':
+        Stats.gamelog = Filtered.player['last']
+    elif type == 'MIN':
+        Stats.gamelog = Filtered.player['minutes']
+    elif type == 'WITHOUT':
+        Stats.gamelog = Filtered.player['without']
+
 
 
 def basic():
@@ -108,16 +108,17 @@ def basic():
     index = ['PTS', 'REB', 'AST', 'BLK', 'TOV', 'PF']
     table = pd.DataFrame(frame, index=index)
     print(table)
-    md = table.to_markdown()
-    return md
+    # md = table.to_markdown()
+    # return md
 
 
 def reb_type():
     frame = {" ": [Stats.reb, Stats.oreb, Stats.dreb, Stats.oreb_ratio, Stats.dreb_ratio]}
     index = ['REB', 'OREB', 'DREB', 'OREB_RATIO', 'DREB_RATIO']
     table = pd.DataFrame(frame, index=index)
-    md = table.to_markdown()
-    return md
+    print(table)
+    # md = table.to_markdown()
+    # return md
 
 
 def fg_type():
@@ -126,8 +127,9 @@ def fg_type():
                    Stats.ftm, Stats.fta, Stats.ft_pct]}
     index = ['FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FG3_RATIO', 'FTM', 'FTA', 'FT_PCT']
     table = pd.DataFrame(frame, index=index)
-    md = table.to_markdown()
-    return md
+    print(table)
+    # md = table.to_markdown()
+    # return md
 
 
 def tm_advanced():
@@ -144,8 +146,9 @@ def tm_advanced():
                                                                  usg_pct]}
     index = ['AST%', 'AST/TO', 'eFG%', 'TSA', 'TOV%', 'TS%', 'USG%']
     table = pd.DataFrame(frame, index=index)
-    md = table.to_markdown()
-    return md
+    print(table)
+    # md = table.to_markdown()
+    # return md
 
 
 def opp_advanced():
@@ -167,5 +170,6 @@ def opp_advanced():
             'opp']: [oreb_pct, dreb_pct, blk_pct, stl_pct]}
     index = ['OREB%', 'DREB%', 'BLK%', 'STL%']
     table = pd.DataFrame(frame, index=index)
-    md = table.to_markdown()
-    return md
+    print(table)
+    # md = table.to_markdown()
+    # return md
