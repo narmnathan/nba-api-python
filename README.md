@@ -3,7 +3,7 @@
 
 ```python
 from load import run
-run('Jayson Tatum BOS vs. LAC 24.5 REBS')
+run('Jayson Tatum BOS vs. LAC 24.5 PTS')
 # enter full name, player team, court, opposing team, fantasy value and type
 ```
 
