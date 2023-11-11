@@ -1,10 +1,8 @@
 import pandas as pd
 from manager import CSV, Filtered
 
-
 class Gamelogs:
     prop = CSV.prop
-
 
 class Stats:
     gamelog = CSV.gamelog['player']
@@ -79,7 +77,8 @@ class Stats:
     opp_ftm = opp_gamelog['FTM'].mean()
     opp_fta = opp_gamelog['FTA'].mean()
     opp_ft_pct = opp_gamelog['FT_PCT'].mean()
-
+ 
+        
 
 Stats()
 Gamelogs()  # no way to simplify this ?
@@ -89,18 +88,18 @@ Gamelogs()  # no way to simplify this ?
 # per filters: knowing gamelogs change per filter, need a method to change gamelog variables per filter.
 # so last 10 games will change the gamelog assignment to Filtered.player['last'] instead of CSV.gamelog['player']
 
+   
 def change(type): # can run switch statement but ipykernel stuck on python3.9
     if type == 'COURT':
-        Stats.gamelog = Filtered.player['court']
+        gamelog = Filtered.player['court']
     elif type == 'OPP':
-        Stats.gamelog = Filtered.player['against']
+        gamelog = Filtered.player['against']
     elif type == 'LAST':
-        Stats.gamelog = Filtered.player['last']
+        gamelog = Filtered.player['last']
     elif type == 'MIN':
-        Stats.gamelog = Filtered.player['minutes']
+        gamelog = Filtered.player['minutes']
     elif type == 'WITHOUT':
-        Stats.gamelog = Filtered.player['without']
-
+        amelog = Filtered.player['without']
 
 
 def basic():
